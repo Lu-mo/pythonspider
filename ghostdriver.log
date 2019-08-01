@@ -1,0 +1,47 @@
+[INFO  - 2019-07-28T04:40:55.009Z] GhostDriver - Main - running on port 27994
+[INFO  - 2019-07-28T04:40:56.366Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2019-07-28T04:40:56.366Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.customHeaders:  - {}
+[INFO  - 2019-07-28T04:40:56.373Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"windows-10-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2019-07-28T04:40:56.373Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: e3996a80-b0f1-11e9-ae3b-2dedf8ec3003
+[ERROR - 2019-07-28T04:41:02.145Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - msg: VIDEOJS: ERROR: (CODE:4 MEDIA_ERR_SRC_NOT_SUPPORTED) No compatible source was found for this media. [object Object]
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:02.145Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - stack:
+  apply (:0)
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:02.147Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - msg: ReferenceError: Can't find variable: ga
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:02.147Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - stack:
+  sendPageToGg (http://kongjie58.space/static/js/app.110b59742309ea3b2639.js:1)
+  (anonymous function) (http://kongjie58.space/static/js/app.110b59742309ea3b2639.js:1)
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:02.148Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - msg: ReferenceError: Can't find variable: ga
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:02.148Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - stack:
+  sendPageToGg (http://kongjie58.space/static/js/app.110b59742309ea3b2639.js:1)
+  (anonymous function) (http://kongjie58.space/static/js/app.110b59742309ea3b2639.js:1)
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:03.123Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - msg: TypeError: undefined is not an object (evaluating 'this.$refs.Myswiper.swiper')
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:03.123Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - stack:
+  swiperQ (http://kongjie58.space/static/js/app.110b59742309ea3b2639.js:1)
+  get (http://kongjie58.space/static/js/vendor.2146d5afc12a70e9e1ff.js:1)
+  evaluate (http://kongjie58.space/static/js/vendor.2146d5afc12a70e9e1ff.js:1)
+  (anonymous function) (http://kongjie58.space/static/js/vendor.2146d5afc12a70e9e1ff.js:1)
+  (anonymous function) (http://kongjie58.space/static/js/app.110b59742309ea3b2639.js:1)
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:03.123Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - msg: TypeError: undefined is not an object (evaluating 'r.stack')
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2019-07-28T04:41:03.123Z] Session [e3996a80-b0f1-11e9-ae3b-2dedf8ec3003] - page.onError - stack:
+  o (http://cdn.inspectlet.com/inspectlet.js?wid=424123595&r=434524:9)
+  one (http://cdn.inspectlet.com/inspectlet.js?wid=424123595&r=434524:9)
+
+  phantomjs://platform/console++.js:263 in error
