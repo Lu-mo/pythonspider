@@ -49,13 +49,12 @@ def download(filePath):
 path = "D:\\m3u8\\m3u8\\"
 
 #download(path+"浪货赵梦婷（第一集）.m3u8")
-list = list()
-with open(path+"m3u8.txt","r",encoding="utf-8") as f:
+with open(path+"m3u8.txt", "r", encoding="utf-8") as f:
     for line in f.readlines():
         spiltPos = line.find(":")
         fileName = line[:spiltPos]
         url = line[spiltPos+1:]
-        if os.path.exists(path+fileName+".m3u8")==True:
+        if os.path.exists(path+fileName+".m3u8") is True:
             continue
         else:
-            downloadM3u8(path,fileName,url)
+            downloadM3u8(path, fileName, url)
