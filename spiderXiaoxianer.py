@@ -125,7 +125,9 @@ if __name__ == "__main__":
             if sec <= startFlag:
                 continue
 
-            result = input(sectionsText[sec]+",是否爬取该节目？((Y | 回车)/N)")
+            result = input(sectionsText[sec]+"\n"+
+                            sections[sec].find_element_by_css_selector("ul").text+ " "+sections[sec].find_element_by_css_selector("div.count").text+"\n"
+                               +"是否爬取该节目？((Y | 回车)/N)")
             if result.lower() == "n":
                 continue
 
@@ -145,6 +147,12 @@ if __name__ == "__main__":
             listCount = 0
             listCount = len(radioList)
 
+            #div.flex-left.flex-middle.radioCard:nth-child(3)
+            radioNameList = driver.find_elements_by_css_selector("div.radioList>div.flex-left.flex-middle.radioCard>div.unit.radioTItle>div.title")
+            radioNameTextList = list()
+            for eachRadioName in radioNameList:
+                radioNameTextList.append(eachRadioName.text)
+
             # 如果节目单只有一个节目且已经爬去，直接返回上一层
             radioName = radioList[0].text
             radioName = radioName[:radioName.find("\n")]
@@ -153,6 +161,8 @@ if __name__ == "__main__":
                 driver.find_element_by_css_selector("[class='mintui mintui-back']").click()
                 continue
 
+            urlToNameDict = dict()
+            logIndex = 0
             for i in range(listCount):
 
                 # 进出节目页面后,定位的节目元素会失效，需重新定位
@@ -189,6 +199,8 @@ if __name__ == "__main__":
                     backButton = driver.find_element_by_css_selector("[class='mintui mintui-back']").click()
                     continue
 
+                checkWebStatu(driver)
+                urlToNameDict[driver.current_url] = radioName
                 # 相当于获取F12Network选项卡的内容,结构应该是栈,后进内容先提取
                 # 提取带有m3u8的链接,写入文件存储
                 # 这一段不太严谨，无法保证链接与节目一一对应,但目前没有出过错
@@ -197,10 +209,11 @@ if __name__ == "__main__":
                 for each in logs:
                     if each["method"] == 'Network.requestWillBeSent':
                         try:
+                            referer = each["params"]["request"]["headers"]["Referer"]
                             each = each["params"]["request"]["url"]
                             begin = each.find("m3u8?")
                             if begin != -1:
-                                logsProcessed.append(radioName + ":" + each)
+                                logsProcessed.append(urlToNameDict.get(referer) + ":" + each)
                                 #break
                         except:
                             continue

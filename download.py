@@ -49,7 +49,7 @@ def download(filePath):
 path = "D:\\m3u8\\m3u8\\"
 
 #download(path+"浪货赵梦婷（第一集）.m3u8")
-with open(path+"m3u8.txt", "r", encoding="utf-8") as f:
+with open(path+"m3u8xiaoxianer.txt", "r", encoding="utf-8") as f:
     for line in f.readlines():
         spiltPos = line.find(":")
         fileName = line[:spiltPos]
