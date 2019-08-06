@@ -1,3 +1,4 @@
+#137
 import json
 import time
 import pycurl
@@ -29,28 +30,51 @@ def login(driver):
 
 
 def checkWebStatu(driver):
-    print("\r 网页加载状态检测中...",end="")
-    js="if(document.querySelector(\"[class='mint-indicator']\")==null)" \
-       "{return \"has no element\"}" \
-       "else if(document.querySelector(\"[class='mint-indicator']\").hasAttribute(\"style\")==true){" \
-       "return document.querySelector(\"[class='mint-indicator']\").style.display;" \
-       "}" \
-       "else" \
-       "{" \
-       "return \"has no style\";" \
-       "}"
-    result=driver.execute_script(js)
+    print("\r 网页加载状态检测中...", end="")
+    js = "if(document.querySelector(\"[class='mint-indicator']\")==null)" \
+         "{return \"has no element\"}" \
+         "else if(document.querySelector(\"[class='mint-indicator']\").hasAttribute(\"style\")==true){" \
+         "return document.querySelector(\"[class='mint-indicator']\").style.display;" \
+         "}" \
+         "else" \
+         "{" \
+         "return \"has no style\";" \
+         "}"
+    result = driver.execute_script(js)
     while driver.execute_script(js) != "none":
         time.sleep(1)
         if driver.execute_script(js) == "has no element":
             time.sleep(3)
-            return False
+            # return False
+
     time.sleep(1)
     if driver.execute_script(js) == "none":
         print("\r 加载完成", end="")
         return True
     else:
         return checkWebStatu(driver)
+    # print("\r 网页加载状态检测中...",end="")
+    # js="if(document.querySelector(\"[class='mint-indicator']\")==null)" \
+    #    "{return \"has no element\"}" \
+    #    "else if(document.querySelector(\"[class='mint-indicator']\").hasAttribute(\"style\")==true){" \
+    #    "return document.querySelector(\"[class='mint-indicator']\").style.display;" \
+    #    "}" \
+    #    "else" \
+    #    "{" \
+    #    "return \"has no style\";" \
+    #    "}"
+    # result=driver.execute_script(js)
+    # while driver.execute_script(js) != "none":
+    #     time.sleep(1)
+    #     if driver.execute_script(js) == "has no element":
+    #         time.sleep(3)
+    #         return False
+    # time.sleep(1)
+    # if driver.execute_script(js) == "none":
+    #     print("\r 加载完成", end="")
+    #     return True
+    # else:
+    #     return checkWebStatu(driver)
 
 
 def refreshSections(sections,sectionsText,pageNum):
@@ -177,7 +201,7 @@ if __name__=="__main__":
     program begin
     '''
     txtSet = set()
-    txtSet = readTxtToSet('D:\\m3u8\\m3u8\\m3u8.txt', txtSet=txtSet)
+    txtSet = readTxtToSet('C:\\Users\\yxt91\\data\\m3u8.txt', txtSet=txtSet)
 
     options = webdriver.ChromeOptions()
     # 禁止加载图片和JS
@@ -244,10 +268,10 @@ if __name__=="__main__":
 
     listLen = len(sections)
 
-    tempFlag = 21
+    #tempFlag = 21
     for sec in range(listLen):
-        if sec <= tempFlag:
-            continue
+        # if sec = tempFlag:
+        #     continue
 
         # 点击进入二层节目列表
         try:
@@ -274,6 +298,7 @@ if __name__=="__main__":
             driver.find_element_by_css_selector("[class='mintui mintui-back']").click()
             continue
 
+        urlToNameDict = dict()
         for i in range(listCount):
 
             # 进出节目页面后,定位的节目元素会失效，需重新定位
@@ -295,8 +320,7 @@ if __name__=="__main__":
             finally:
                 tCSS = "div.radioList>div.flex-left.flex-middle.radioCard:nth-child(" + str(i + 1) + ")"
                 WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, tCSS)))
-                while driver.find_element_by_css_selector("[class='mint-indicator']").is_displayed():
-                    time.sleep(1)
+                checkWebStatu(driver)
                 esp.click()
 
             time.sleep(5)
@@ -307,6 +331,7 @@ if __name__=="__main__":
                 backButton = driver.find_element_by_css_selector("[class='mintui mintui-back']").click()
                 continue
 
+            urlToNameDict[driver.current_url] = radioName
             # 相当于获取F12Network选项卡的内容,结构应该是栈,后进内容先提取
             # 提取带有m3u8的链接,写入文件存储
             # 这一段不太严谨，无法保证链接与节目一一对应,但目前没有出过错
@@ -315,10 +340,12 @@ if __name__=="__main__":
             for each in logs:
                 if each["method"] == 'Network.requestWillBeSent':
                     try:
+                        referer = each["params"]["request"]["headers"]["Referer"]
                         each = each["params"]["request"]["url"]
                         begin = each.find("m3u8?")
                         if begin != -1:
-                            logsProcessed.append(radioName + ":" + each)
+                            #logsProcessed.append(radioName + ":" + each)
+                            logsProcessed.append(urlToNameDict.get(referer) + ":" + each)
                     except:
                         continue
             t = json.dumps(logsProcessed)
