@@ -12,7 +12,8 @@ async def downloadM3u8(path,fileName,url):
     #url = 'https://radioluntan.space/apiv286.m3u8?request=3DTXnd8fqSVbdQSsymV8NTV5y16yduUkMOnguZBOCoH6YuKRk4tFLsJp%2BIheovJ8mDgYyvZq0j2U9GlP7hXaYYZ9dxtknVg0glSFsx4m58V%2FBsdYDvIrrKwGdQBZB9qHKG5y6feBrDrS27eUtWqpJXd%2BbFoMo0mfBfJen2ljBEJh5zT8bl3hvXxhxMvOilo3b1YB1f%2B0GpZUwhHKdpD1U4apoKnHGvtNB6RTOVDgBvhyRPPKBBSoS%2FD8lqUPndDDsgdG7uaqQC7EyLH5jDBMk79oU8ua7CYGsVf0NqIc1Hx0hAMTInQWyFuOFDHgHgWq%2Fm5C5TnxfXp8I1RMx4YQmxddmzT4LJTmWv5458DsIVE%3D'
     r = await requests.get(url)
     async with aiofiles.open(path + fileName + ".m3u8", "wb") as code:
-        await code.write(await r.content)
+        await code.write(await r.read())
+        await code.flush()
 
 
 async def download(filePath,download_path):
@@ -40,13 +41,15 @@ async def download(filePath,download_path):
         if "EXTINF" in file_line[index]:
             unknow = False
             tasks = []
-            for i in [1, 3, 5, 7, 9]:
+            for i in [1, 3, 5, 7, 9]:#, 11, 13, 15, 17, 19
                 if index+i < len(file_line):
                     tasks.append(get_ts(file_line[index+i],download_path))
             # 拼出ts片段的URL
             #pd_url = filePath.rsplit("/", 1)[0] + "/" + file_line[index + 1]
             await asyncio.gather(*tasks)
             index = index + i + 1
+        else:
+            break
     if unknow:
         raise BaseException("未找到对应的下载链接")
     else:
@@ -89,6 +92,16 @@ async def run():
 
     # combine(tsPath,combinePath,"浪货赵梦婷（第一集）")
 
+    # with open(m3u8Path + "m3u8xiaoxianer.txt", "r", encoding="utf-8") as f:
+    #     for line in f.readlines():
+    #         spiltPos = line.find(":")
+    #         fileName = line[:spiltPos]
+    #         url = line[spiltPos + 1:]
+    #         if os.path.exists(m3u8Path + fileName + ".m3u8") is True:
+    #             continue
+    #         else:
+    #             await downloadM3u8(m3u8Path, fileName, url)
+
     for file in os.listdir(m3u8Path):
         # print(file.lower())
 
@@ -106,13 +119,5 @@ async def run():
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(run())
-    # with open(m3u8Path + "m3u8.txt", "r", encoding="utf-8") as f:
-    #     for line in f.readlines():
-    #         spiltPos = line.find(":")
-    #         fileName = line[:spiltPos]
-    #         url = line[spiltPos + 1:]
-    #         if os.path.exists(m3u8Path + fileName + ".m3u8") is True:
-    #             continue
-    #         else:
-    #             downloadM3u8(m3u8Path, fileName, url)
+
     #

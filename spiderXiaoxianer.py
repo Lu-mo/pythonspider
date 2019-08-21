@@ -125,6 +125,8 @@ if __name__ == "__main__":
             if sec <= startFlag:
                 continue
 
+            sections, sectionsText = refreshSections(startPoint=startPoint)
+
             result = input(sectionsText[sec]+"\n"+
                             sections[sec].find_element_by_css_selector("ul").text+ " "+sections[sec].find_element_by_css_selector("div.count").text+"\n"
                                +"是否爬取该节目？((Y | 回车)/N)")
@@ -190,9 +192,10 @@ if __name__ == "__main__":
                     esp.click()
 
                 checkWebStatu(driver)
-                #time.sleep(5)
+                time.sleep(5)
                 # storage=LocalStorage(driver)
                 radioName = driver.find_element_by_css_selector("[class='mint-header-title']").text
+                urlToNameDict[driver.current_url] = radioName
                 if radioName in txtSet:
                     checkWebStatu(driver)
                     time.sleep(3)
@@ -200,7 +203,7 @@ if __name__ == "__main__":
                     continue
 
                 checkWebStatu(driver)
-                urlToNameDict[driver.current_url] = radioName
+
                 # 相当于获取F12Network选项卡的内容,结构应该是栈,后进内容先提取
                 # 提取带有m3u8的链接,写入文件存储
                 # 这一段不太严谨，无法保证链接与节目一一对应,但目前没有出过错
